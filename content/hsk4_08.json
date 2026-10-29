@@ -1,0 +1,702 @@
+[
+ {
+  "hanzi": "流行",
+  "pinyin": "liúxíng",
+  "doc": "liếu xính",
+  "hanviet": "lưu hành",
+  "nghia": "thịnh hành, hot, mốt",
+  "level": 4,
+  "vd": {
+   "zh": "今年很流行这种衣服。",
+   "py": "Jīnnián hěn liúxíng zhè zhǒng yīfu.",
+   "vi": "Năm nay kiểu áo này rất thịnh hành."
+  },
+  "meo": "Lưu hành = chảy đi khắp nơi → thịnh hành. Nhạc 流行 = nhạc pop. Trend TikTok lưu hành 3 ngày rồi chìm nghỉm."
+ },
+ {
+  "hanzi": "精彩",
+  "pinyin": "jīngcǎi",
+  "doc": "chinh chải",
+  "hanviet": "tinh thái",
+  "nghia": "đặc sắc, hấp dẫn, tuyệt vời",
+  "level": 4,
+  "vd": {
+   "zh": "昨天的比赛太精彩了！",
+   "py": "Zuótiān de bǐsài tài jīngcǎi le!",
+   "vi": "Trận đấu hôm qua quá hay!"
+  },
+  "meo": "Tinh (tinh túy) + thải (màu sắc rực rỡ, như “sắc thái”). Trận chung kết 精彩 tới mức cả quán cà phê “chinh chải” nhảy dựng lên."
+ },
+ {
+  "hanzi": "有趣",
+  "pinyin": "yǒuqù",
+  "doc": "dẩu chuy",
+  "hanviet": "hữu thú",
+  "nghia": "thú vị, hay ho",
+  "level": 4,
+  "vd": {
+   "zh": "这本书很有趣。",
+   "py": "Zhè běn shū hěn yǒuqù.",
+   "vi": "Cuốn sách này rất thú vị."
+  },
+  "meo": "Hữu (có) + thú (thú vị) = có thú vị. Thầy giáo 有趣 là thầy mà cả lớp không ai ngủ gật."
+ },
+ {
+  "hanzi": "吸引",
+  "pinyin": "xīyǐn",
+  "doc": "xi ỉn",
+  "hanviet": "hấp dẫn",
+  "nghia": "thu hút, hấp dẫn",
+  "level": 4,
+  "vd": {
+   "zh": "这家店的香味吸引了很多人。",
+   "py": "Zhè jiā diàn de xiāngwèi xīyǐn le hěn duō rén.",
+   "vi": "Mùi thơm của quán này thu hút rất nhiều người."
+  },
+  "meo": "Hấp (hút) + dẫn (kéo) = hút và kéo về → hấp dẫn. Mùi sầu riêng 吸引 cả phố — hoặc đuổi cả phố, tùy người."
+ },
+ {
+  "hanzi": "印象",
+  "pinyin": "yìnxiàng",
+  "doc": "in xeng",
+  "hanviet": "ấn tượng",
+  "nghia": "ấn tượng",
+  "level": 4,
+  "vd": {
+   "zh": "你对新加坡的印象怎么样？",
+   "py": "Nǐ duì Xīnjiāpō de yìnxiàng zěnmeyàng?",
+   "vi": "Ấn tượng của cậu về Singapore thế nào?"
+  },
+  "meo": "Ấn tượng = 印象, Hán Việt y hệt (ấn = in dấu). Ấn tượng đầu tiên về Singapore: sạch, nóng, và cái gì cũng in hình sư tử biển."
+ },
+ {
+  "hanzi": "美丽",
+  "pinyin": "měilì",
+  "doc": "mẩy li",
+  "hanviet": "mỹ lệ",
+  "nghia": "xinh đẹp, mỹ lệ",
+  "level": 4,
+  "vd": {
+   "zh": "这里的风景非常美丽。",
+   "py": "Zhèlǐ de fēngjǐng fēicháng měilì.",
+   "vi": "Phong cảnh ở đây vô cùng đẹp."
+  },
+  "meo": "Mỹ (đẹp, mỹ nhân) + lệ (đẹp, diễm lệ) = đẹp gấp đôi. Văn vẻ hơn 漂亮 — dùng cho phong cảnh, cô dâu, bài văn tả cảnh."
+ },
+ {
+  "hanzi": "理想",
+  "pinyin": "lǐxiǎng",
+  "doc": "lỉ xẻng",
+  "hanviet": "lý tưởng",
+  "nghia": "ước mơ, lý tưởng",
+  "level": 4,
+  "vd": {
+   "zh": "你小时候的理想是什么？",
+   "py": "Nǐ xiǎo shíhou de lǐxiǎng shì shénme?",
+   "vi": "Hồi nhỏ ước mơ của cậu là gì?"
+  },
+  "meo": "Lý tưởng = 理想. Lý tưởng hồi nhỏ: làm phi hành gia. Lý tưởng bây giờ: được ngủ tới 9 giờ sáng thứ Bảy."
+ },
+ {
+  "hanzi": "将来",
+  "pinyin": "jiānglái",
+  "doc": "cheng lái",
+  "hanviet": "tương lai",
+  "nghia": "tương lai",
+  "level": 4,
+  "vd": {
+   "zh": "将来我想开一家自己的咖啡店。",
+   "py": "Jiānglái wǒ xiǎng kāi yì jiā zìjǐ de kāfēi diàn.",
+   "vi": "Sau này mình muốn mở một quán cà phê của riêng mình."
+  },
+  "meo": "Tương lai = 将来, Hán Việt y hệt (将 = sắp, 来 = đến). Ước mơ tương lai của dân văn phòng: mở quán cà phê, nuôi mèo, không có sếp."
+ },
+ {
+  "hanzi": "生活",
+  "pinyin": "shēnghuó",
+  "doc": "sâng húa",
+  "hanviet": "sinh hoạt",
+  "nghia": "cuộc sống; sống",
+  "level": 4,
+  "vd": {
+   "zh": "我很喜欢在新加坡的生活。",
+   "py": "Wǒ hěn xǐhuan zài Xīnjiāpō de shēnghuó.",
+   "vi": "Mình rất thích cuộc sống ở Singapore."
+  },
+  "meo": "Hán Việt “sinh hoạt” nhưng nghĩa rộng hơn: CUỘC SỐNG. Sinh (sống) + hoạt (động) = sống động. Cuộc sống mà không sinh hoạt thì gọi là… nằm."
+ },
+ {
+  "hanzi": "生命",
+  "pinyin": "shēngmìng",
+  "doc": "sâng minh",
+  "hanviet": "sinh mệnh",
+  "nghia": "sinh mạng, sự sống",
+  "level": 4,
+  "vd": {
+   "zh": "医生救了他的生命。",
+   "py": "Yīshēng jiù le tā de shēngmìng.",
+   "vi": "Bác sĩ đã cứu sống anh ấy."
+  },
+  "meo": "Sinh mệnh = mạng sống. Phân biệt: 生活 là cuộc sống hằng ngày, 生命 là mạng sống. Mất 生活 thì buồn, mất 生命 thì hết chơi."
+ },
+ {
+  "hanzi": "社会",
+  "pinyin": "shèhuì",
+  "doc": "sưa huây",
+  "hanviet": "xã hội",
+  "nghia": "xã hội",
+  "level": 4,
+  "vd": {
+   "zh": "大学毕业以后，我们就要进入社会了。",
+   "py": "Dàxué bìyè yǐhòu, wǒmen jiù yào jìnrù shèhuì le.",
+   "vi": "Tốt nghiệp đại học xong, tụi mình sẽ bước vào xã hội."
+  },
+  "meo": "Xã hội = 社会, Hán Việt y hệt. Ra trường mới biết: “xã hội” không có đáp án ở cuối sách."
+ },
+ {
+  "hanzi": "经济",
+  "pinyin": "jīngjì",
+  "doc": "chinh chi",
+  "hanviet": "kinh tế",
+  "nghia": "kinh tế",
+  "level": 4,
+  "vd": {
+   "zh": "新加坡的经济很发达。",
+   "py": "Xīnjiāpō de jīngjì hěn fādá.",
+   "vi": "Kinh tế Singapore rất phát triển."
+  },
+  "meo": "Kinh tế = 经济, Hán Việt y hệt. Tình hình kinh tế cá nhân cuối tháng: “chinh chi” — chỉ dám chi tiêu ở mức tối thiểu."
+ },
+ {
+  "hanzi": "国际",
+  "pinyin": "guójì",
+  "doc": "cúa chi",
+  "hanviet": "quốc tế",
+  "nghia": "quốc tế",
+  "level": 4,
+  "vd": {
+   "zh": "新加坡是一个国际城市。",
+   "py": "Xīnjiāpō shì yí ge guójì chéngshì.",
+   "vi": "Singapore là một thành phố quốc tế."
+  },
+  "meo": "Quốc tế = 国际 (际 = tế, giao tế). Sân bay quốc tế = 国际机场. Nhà hàng “quốc tế” = có menu tiếng Anh và giá gấp đôi."
+ },
+ {
+  "hanzi": "首都",
+  "pinyin": "shǒudū",
+  "doc": "sẩu tu",
+  "hanviet": "thủ đô",
+  "nghia": "thủ đô",
+  "level": 4,
+  "vd": {
+   "zh": "河内是越南的首都。",
+   "py": "Hénèi shì Yuènán de shǒudū.",
+   "vi": "Hà Nội là thủ đô của Việt Nam."
+  },
+  "meo": "Thủ đô = 首都, Hán Việt y hệt (首 = đầu, như “thủ lĩnh”). Thủ đô Hà Nội — tiếng Trung đọc là 河内 Hénèi."
+ },
+ {
+  "hanzi": "亲戚",
+  "pinyin": "qīnqi",
+  "doc": "chin chi",
+  "hanviet": "thân thích",
+  "nghia": "họ hàng",
+  "level": 4,
+  "vd": {
+   "zh": "过年的时候，很多亲戚来我家。",
+   "py": "Guònián de shíhou, hěn duō qīnqi lái wǒ jiā.",
+   "vi": "Dịp Tết, nhiều họ hàng đến nhà mình."
+  },
+  "meo": "Thân thích = họ hàng (“bà con thân thích”). Tết đến họ hàng hỏi “chin chi” — chín câu chi cũng là: Lương bao nhiêu? Bao giờ cưới?"
+ },
+ {
+  "hanzi": "父亲",
+  "pinyin": "fùqīn",
+  "doc": "phu chin",
+  "hanviet": "phụ thân",
+  "nghia": "cha (trang trọng)",
+  "level": 4,
+  "vd": {
+   "zh": "我的父亲是一名医生。",
+   "py": "Wǒ de fùqīn shì yì míng yīshēng.",
+   "vi": "Cha tôi là bác sĩ."
+  },
+  "meo": "Phụ thân — y như phim kiếm hiệp: “Phụ thân đại nhân!” Ở nhà gọi 爸爸, viết văn thì gọi 父亲."
+ },
+ {
+  "hanzi": "母亲",
+  "pinyin": "mǔqīn",
+  "doc": "mủ chin",
+  "hanviet": "mẫu thân",
+  "nghia": "mẹ (trang trọng)",
+  "level": 4,
+  "vd": {
+   "zh": "母亲节快乐！",
+   "py": "Mǔqīn Jié kuàilè!",
+   "vi": "Chúc mừng Ngày của Mẹ!"
+  },
+  "meo": "Mẫu thân — “Mẫu thân, con về rồi!” Ở nhà gọi 妈妈, thiệp chúc mừng thì 母亲节快乐. Cặp: 父亲 phụ thân, 母亲 mẫu thân."
+ },
+ {
+  "hanzi": "儿童",
+  "pinyin": "értóng",
+  "doc": "ớ thúng",
+  "hanviet": "nhi đồng",
+  "nghia": "trẻ em",
+  "level": 4,
+  "vd": {
+   "zh": "六月一日是儿童节。",
+   "py": "Liù yuè yī rì shì Értóng Jié.",
+   "vi": "Ngày 1 tháng 6 là ngày Quốc tế Thiếu nhi."
+  },
+  "meo": "Nhi đồng = 儿童 — Hán Việt y hệt! Nhớ “Báo Nhi Đồng” hồi bé. Ngày 1/6 là 儿童节, người lớn cũng đòi quà."
+ },
+ {
+  "hanzi": "孙子",
+  "pinyin": "sūnzi",
+  "doc": "xuân chư",
+  "hanviet": "tôn tử",
+  "nghia": "cháu nội (trai)",
+  "level": 4,
+  "vd": {
+   "zh": "奶奶最喜欢她的小孙子。",
+   "py": "Nǎinai zuì xǐhuan tā de xiǎo sūnzi.",
+   "vi": "Bà nội cưng nhất đứa cháu trai nhỏ."
+  },
+  "meo": "Tôn = cháu (đích tôn). Cùng chữ với “Tôn Tử binh pháp”! Đứa cháu đích tôn được bà cưng như vàng."
+ },
+ {
+  "hanzi": "小伙子",
+  "pinyin": "xiǎohuǒzi",
+  "doc": "xẻo hủa chư",
+  "hanviet": "tiểu khỏa tử",
+  "nghia": "chàng trai trẻ",
+  "level": 4,
+  "vd": {
+   "zh": "这个小伙子又高又帅。",
+   "py": "Zhège xiǎohuǒzi yòu gāo yòu shuài.",
+   "vi": "Chàng trai này vừa cao vừa đẹp trai."
+  },
+  "meo": "Khỏa (伙 = bạn bè, đồng bọn) → “thằng nhóc”. Các bác gọi trai trẻ là 小伙子 — trai trẻ năng lượng “hỏa” (lửa) hừng hực."
+ },
+ {
+  "hanzi": "师傅",
+  "pinyin": "shīfu",
+  "doc": "sư phu",
+  "hanviet": "sư phó",
+  "nghia": "bác tài, bác thợ; sư phụ",
+  "level": 4,
+  "vd": {
+   "zh": "师傅，去机场多少钱？",
+   "py": "Shīfu, qù jīchǎng duōshao qián?",
+   "vi": "Bác tài ơi, ra sân bay bao nhiêu tiền?"
+  },
+  "meo": "Sư phụ! Nhưng ngoài phim kiếm hiệp, người Trung gọi bác tài xế, thợ sửa xe, đầu bếp đều là 师傅. Lên taxi cứ “Sư phụ ơi!”"
+ },
+ {
+  "hanzi": "售货员",
+  "pinyin": "shòuhuòyuán",
+  "doc": "sâu hua doén",
+  "hanviet": "thụ hóa viên",
+  "nghia": "nhân viên bán hàng",
+  "level": 4,
+  "vd": {
+   "zh": "售货员，这件衣服有大号的吗？",
+   "py": "Shòuhuòyuán, zhè jiàn yīfu yǒu dà hào de ma?",
+   "vi": "Bạn ơi, cái áo này có size lớn không?"
+  },
+  "meo": "Thụ (bán) + hóa (hàng hóa) + viên (nhân viên) = nhân viên bán hàng. Dịch từng chữ ra luôn — dài nhưng dễ!"
+ },
+ {
+  "hanzi": "年龄",
+  "pinyin": "niánlíng",
+  "doc": "niến lính",
+  "hanviet": "niên linh",
+  "nghia": "tuổi tác",
+  "level": 4,
+  "vd": {
+   "zh": "问女生的年龄不太礼貌。",
+   "py": "Wèn nǚshēng de niánlíng bú tài lǐmào.",
+   "vi": "Hỏi tuổi con gái không lịch sự lắm."
+  },
+  "meo": "Niên (năm) + linh (tuổi) = tuổi tác. Câu hỏi nguy hiểm nhất: hỏi 年龄 phụ nữ. Câu trả lời an toàn nhất: “18 mãi mãi”."
+ },
+ {
+  "hanzi": "性别",
+  "pinyin": "xìngbié",
+  "doc": "xinh piế",
+  "hanviet": "tính biệt",
+  "nghia": "giới tính",
+  "level": 4,
+  "vd": {
+   "zh": "请在表格上写你的性别和年龄。",
+   "py": "Qǐng zài biǎogé shang xiě nǐ de xìngbié hé niánlíng.",
+   "vi": "Vui lòng ghi giới tính và tuổi lên biểu mẫu."
+  },
+  "meo": "Tính (giới tính) + biệt (phân biệt) = phân biệt giới → giới tính. Ô thứ hai trên mọi biểu mẫu, ngay sau ô họ tên."
+ },
+ {
+  "hanzi": "样子",
+  "pinyin": "yàngzi",
+  "doc": "dang chư",
+  "hanviet": "dạng tử",
+  "nghia": "dáng vẻ, kiểu dáng",
+  "level": 4,
+  "vd": {
+   "zh": "看你的样子，昨天又没睡好吧？",
+   "py": "Kàn nǐ de yàngzi, zuótiān yòu méi shuì hǎo ba?",
+   "vi": "Nhìn bộ dạng cậu, hôm qua lại ngủ không ngon à?"
+  },
+  "meo": "Dạng = hình dạng, bộ dạng. Mẹ nhìn 样子 thâm quầng mắt là biết ngay con thức khuya cày phim."
+ },
+ {
+  "hanzi": "态度",
+  "pinyin": "tàidu",
+  "doc": "thai tu",
+  "hanviet": "thái độ",
+  "nghia": "thái độ",
+  "level": 4,
+  "vd": {
+   "zh": "这家店服务员的态度很好。",
+   "py": "Zhè jiā diàn fúwùyuán de tàidu hěn hǎo.",
+   "vi": "Thái độ của nhân viên quán này rất tốt."
+  },
+  "meo": "Thái độ = 态度, Hán Việt y hệt. “Thái độ gì đấy?” — câu mẹ hỏi khi con cãi lại, phiên bản Trung: 你什么态度?"
+ },
+ {
+  "hanzi": "情况",
+  "pinyin": "qíngkuàng",
+  "doc": "chính khoang",
+  "hanviet": "tình huống",
+  "nghia": "tình hình, tình huống",
+  "level": 4,
+  "vd": {
+   "zh": "现在的情况怎么样？",
+   "py": "Xiànzài de qíngkuàng zěnmeyàng?",
+   "vi": "Tình hình bây giờ thế nào rồi?"
+  },
+  "meo": "Tình huống = 情况. Sếp gọi điện lúc 10 giờ tối: “Tình hình thế nào rồi em?” — tình huống xấu nhất của dân văn phòng."
+ },
+ {
+  "hanzi": "条件",
+  "pinyin": "tiáojiàn",
+  "doc": "théo chiện",
+  "hanviet": "điều kiện",
+  "nghia": "điều kiện",
+  "level": 4,
+  "vd": {
+   "zh": "这家公司的工作条件很好。",
+   "py": "Zhè jiā gōngsī de gōngzuò tiáojiàn hěn hǎo.",
+   "vi": "Điều kiện làm việc ở công ty này rất tốt."
+  },
+  "meo": "Điều kiện = 条件, Hán Việt y hệt. Điều kiện để cưới con gái mẹ: có nhà, có xe, biết nấu phở."
+ },
+ {
+  "hanzi": "原因",
+  "pinyin": "yuányīn",
+  "doc": "doén in",
+  "hanviet": "nguyên nhân",
+  "nghia": "nguyên nhân",
+  "level": 4,
+  "vd": {
+   "zh": "你迟到的原因是什么？",
+   "py": "Nǐ chídào de yuányīn shì shénme?",
+   "vi": "Lý do cậu đến muộn là gì?"
+  },
+  "meo": "Nguyên nhân = 原因, Hán Việt y hệt. Nguyên nhân đi muộn bất hủ: “Tại kẹt xe”, “Tại báo thức không kêu”."
+ },
+ {
+  "hanzi": "结果",
+  "pinyin": "jiéguǒ",
+  "doc": "chiế của",
+  "hanviet": "kết quả",
+  "nghia": "kết quả; kết cục là",
+  "level": 4,
+  "vd": {
+   "zh": "我减肥一个月，结果胖了两公斤。",
+   "py": "Wǒ jiǎnféi yí ge yuè, jiéguǒ pàng le liǎng gōngjīn.",
+   "vi": "Mình giảm cân một tháng, kết quả lại tăng 2 ký."
+  },
+  "meo": "Kết quả = 结果 (结 = kết, 果 = quả — “kết trái”). Giảm cân một tháng, kết quả: tăng 2 ký. Cây không “kết quả” như mong đợi."
+ },
+ {
+  "hanzi": "目的",
+  "pinyin": "mùdì",
+  "doc": "mu ti",
+  "hanviet": "mục đích",
+  "nghia": "mục đích",
+  "level": 4,
+  "vd": {
+   "zh": "你来新加坡的目的是什么？",
+   "py": "Nǐ lái Xīnjiāpō de mùdì shì shénme?",
+   "vi": "Mục đích bạn đến Singapore là gì?"
+  },
+  "meo": "Mục đích = 目的, Hán Việt y hệt. Câu hỏi của hải quan sân bay — trả lời “ăn chili crab” cũng được tính là du lịch."
+ },
+ {
+  "hanzi": "效果",
+  "pinyin": "xiàoguǒ",
+  "doc": "xeo của",
+  "hanviet": "hiệu quả",
+  "nghia": "hiệu quả",
+  "level": 4,
+  "vd": {
+   "zh": "这个药的效果很好。",
+   "py": "Zhège yào de xiàoguǒ hěn hǎo.",
+   "vi": "Thuốc này hiệu quả rất tốt."
+  },
+  "meo": "Hiệu quả = 效果, Hán Việt y hệt. Kem chống nắng quảng cáo “hiệu quả 12 tiếng” — đi biển 1 tiếng về đen như than."
+ },
+ {
+  "hanzi": "好处",
+  "pinyin": "hǎochu",
+  "doc": "hảo chu",
+  "hanviet": "hảo xứ",
+  "nghia": "lợi ích, điểm tốt",
+  "level": 4,
+  "vd": {
+   "zh": "每天运动对身体有很多好处。",
+   "py": "Měitiān yùndòng duì shēntǐ yǒu hěn duō hǎochu.",
+   "vi": "Vận động mỗi ngày có rất nhiều lợi ích cho cơ thể."
+  },
+  "meo": "Hảo (tốt) + xứ (chỗ) = chỗ tốt → lợi ích. Ngược lại là 坏处 (chỗ xấu). Lợi ích của việc học tiếng Trung: xem phim không cần chờ vietsub!"
+ },
+ {
+  "hanzi": "方法",
+  "pinyin": "fāngfǎ",
+  "doc": "phang phả",
+  "hanviet": "phương pháp",
+  "nghia": "phương pháp, cách",
+  "level": 4,
+  "vd": {
+   "zh": "你有什么学中文的好方法？",
+   "py": "Nǐ yǒu shénme xué Zhōngwén de hǎo fāngfǎ?",
+   "vi": "Cậu có phương pháp học tiếng Trung nào hay không?"
+  },
+  "meo": "Phương pháp = 方法, Hán Việt y hệt. Phương pháp học từ hiệu quả nhất: mẹo hài hước trên widget — đúng cái bạn đang đọc!"
+ },
+ {
+  "hanzi": "速度",
+  "pinyin": "sùdù",
+  "doc": "xu tu",
+  "hanviet": "tốc độ",
+  "nghia": "tốc độ",
+  "level": 4,
+  "vd": {
+   "zh": "这里的网络速度很快。",
+   "py": "Zhèlǐ de wǎngluò sùdù hěn kuài.",
+   "vi": "Tốc độ mạng ở đây rất nhanh."
+  },
+  "meo": "Tốc độ = 速度, Hán Việt y hệt. Tốc độ nhanh nhất vũ trụ: tốc độ tiêu hết lương."
+ },
+ {
+  "hanzi": "数量",
+  "pinyin": "shùliàng",
+  "doc": "su leng",
+  "hanviet": "số lượng",
+  "nghia": "số lượng",
+  "level": 4,
+  "vd": {
+   "zh": "质量比数量更重要。",
+   "py": "Zhìliàng bǐ shùliàng gèng zhòngyào.",
+   "vi": "Chất lượng quan trọng hơn số lượng."
+  },
+  "meo": "Số lượng = 数量, Hán Việt y hệt. Bạn bè trên Facebook: số lượng 2.000, bạn thật: 3 người."
+ },
+ {
+  "hanzi": "质量",
+  "pinyin": "zhìliàng",
+  "doc": "chư leng",
+  "hanviet": "chất lượng",
+  "nghia": "chất lượng",
+  "level": 4,
+  "vd": {
+   "zh": "这件衣服很便宜，但是质量不好。",
+   "py": "Zhè jiàn yīfu hěn piányi, dànshì zhìliàng bù hǎo.",
+   "vi": "Cái áo này rẻ nhưng chất lượng không tốt."
+  },
+  "meo": "Chất lượng = 质量. Áo 50 nghìn trên sàn: giặt lần đầu co lại thành áo cho mèo. “Của rẻ là của ôi.”"
+ },
+ {
+  "hanzi": "增加",
+  "pinyin": "zēngjiā",
+  "doc": "châng cha",
+  "hanviet": "tăng gia",
+  "nghia": "tăng thêm",
+  "level": 4,
+  "vd": {
+   "zh": "过年以后，我的体重增加了三公斤。",
+   "py": "Guònián yǐhòu, wǒ de tǐzhòng zēngjiā le sān gōngjīn.",
+   "vi": "Sau Tết, cân nặng của mình tăng 3 ký."
+  },
+  "meo": "Tăng (增) + gia (加 = thêm) = tăng thêm. Sau Tết thứ duy nhất 增加 là cân nặng, còn tiền thì giảm."
+ },
+ {
+  "hanzi": "减少",
+  "pinyin": "jiǎnshǎo",
+  "doc": "chiẻn sảo",
+  "hanviet": "giảm thiểu",
+  "nghia": "giảm bớt",
+  "level": 4,
+  "vd": {
+   "zh": "我想减少玩手机的时间。",
+   "py": "Wǒ xiǎng jiǎnshǎo wán shǒujī de shíjiān.",
+   "vi": "Mình muốn giảm bớt thời gian chơi điện thoại."
+  },
+  "meo": "Giảm thiểu = 减少 (giảm + ít). Cặp đôi: 增加 tăng ↔ 减少 giảm. Kế hoạch giảm thời gian lướt TikTok — lên kế hoạch xong thì lướt tiếp."
+ },
+ {
+  "hanzi": "降低",
+  "pinyin": "jiàngdī",
+  "doc": "cheng ti",
+  "hanviet": "giáng đê",
+  "nghia": "hạ thấp, giảm xuống",
+  "level": 4,
+  "vd": {
+   "zh": "这家店降低了价格。",
+   "py": "Zhè jiā diàn jiàngdī le jiàgé.",
+   "vi": "Cửa hàng này đã hạ giá."
+  },
+  "meo": "Giáng (hạ, như 降落) + đê (thấp). Dùng cho giá cả, nhiệt độ, tiêu chuẩn. Ế người yêu lâu quá thì phải 降低 tiêu chuẩn."
+ },
+ {
+  "hanzi": "超过",
+  "pinyin": "chāoguò",
+  "doc": "chao cua",
+  "hanviet": "siêu quá",
+  "nghia": "vượt quá",
+  "level": 4,
+  "vd": {
+   "zh": "行李不能超过二十公斤。",
+   "py": "Xíngli bù néng chāoguò èrshí gōngjīn.",
+   "vi": "Hành lý không được quá 20 ký."
+  },
+  "meo": "Siêu (vượt, siêu xe) + quá (qua). Hành lý vượt 20 ký ở sân bay: mở vali ra mặc 5 lớp áo cho đỡ cân."
+ },
+ {
+  "hanzi": "赢",
+  "pinyin": "yíng",
+  "doc": "ính",
+  "hanviet": "doanh",
+  "nghia": "thắng",
+  "level": 4,
+  "vd": {
+   "zh": "这场比赛我们赢了！",
+   "py": "Zhè chǎng bǐsài wǒmen yíng le!",
+   "vi": "Trận này tụi mình thắng rồi!"
+  },
+  "meo": "Doanh = lời lãi (doanh thu, doanh nghiệp) → thắng. Chữ siêu phức tạp: có 亡口月贝凡 — có miệng, có tiền (贝)… thắng thì cái gì cũng có."
+ },
+ {
+  "hanzi": "输",
+  "pinyin": "shū",
+  "doc": "su",
+  "hanviet": "thâu",
+  "nghia": "thua",
+  "level": 4,
+  "vd": {
+   "zh": "他打游戏输了，很不高兴。",
+   "py": "Tā dǎ yóuxì shū le, hěn bù gāoxìng.",
+   "vi": "Anh ấy chơi game thua, rất không vui."
+  },
+  "meo": "Đọc “su” — gần như “thua” bị ngọng! Hán Việt “thâu” — thua là bị thu hết tiền. Cặp: 赢 thắng ↔ 输 thua."
+ },
+ {
+  "hanzi": "举办",
+  "pinyin": "jǔbàn",
+  "doc": "chủy pan",
+  "hanviet": "cử biện",
+  "nghia": "tổ chức (sự kiện)",
+  "level": 4,
+  "vd": {
+   "zh": "我们下个月举办婚礼。",
+   "py": "Wǒmen xià ge yuè jǔbàn hūnlǐ.",
+   "vi": "Tháng sau tụi mình tổ chức đám cưới."
+  },
+  "meo": "Cử (举 = nâng lên, cử tạ) + biện (lo liệu). Tổ chức đám cưới mệt như cử tạ 200 ký — mà ví thì nhẹ tênh."
+ },
+ {
+  "hanzi": "参观",
+  "pinyin": "cānguān",
+  "doc": "chan quan",
+  "hanviet": "tham quan",
+  "nghia": "tham quan",
+  "level": 4,
+  "vd": {
+   "zh": "我们去参观了一个博物馆。",
+   "py": "Wǒmen qù cānguān le yí ge bówùguǎn.",
+   "vi": "Tụi mình đi tham quan một bảo tàng."
+  },
+  "meo": "Tham quan = 参观, Hán Việt y hệt. Đi tham quan bảo tàng: 10 phút xem hiện vật, 50 phút chụp ảnh check-in."
+ },
+ {
+  "hanzi": "报名",
+  "pinyin": "bàomíng",
+  "doc": "pao mính",
+  "hanviet": "báo danh",
+  "nghia": "đăng ký (tên)",
+  "level": 4,
+  "vd": {
+   "zh": "我已经报名参加HSK考试了。",
+   "py": "Wǒ yǐjīng bàomíng cānjiā HSK kǎoshì le.",
+   "vi": "Mình đã đăng ký thi HSK rồi."
+  },
+  "meo": "Báo danh = 报名 — Hán Việt y hệt, như “số báo danh” khi đi thi! Đăng ký thi HSK xong mới bắt đầu hoảng học."
+ },
+ {
+  "hanzi": "交流",
+  "pinyin": "jiāoliú",
+  "doc": "cheo liếu",
+  "hanviet": "giao lưu",
+  "nghia": "giao lưu, trao đổi",
+  "level": 4,
+  "vd": {
+   "zh": "我喜欢跟中国朋友交流。",
+   "py": "Wǒ xǐhuan gēn Zhōngguó péngyou jiāoliú.",
+   "vi": "Mình thích giao lưu với bạn bè Trung Quốc."
+  },
+  "meo": "Giao lưu = 交流, Hán Việt y hệt. Giao lưu văn hóa đỉnh nhất: bạn Trung dạy hát, bạn Việt dạy… gói bánh chưng."
+ },
+ {
+  "hanzi": "熟悉",
+  "pinyin": "shúxī",
+  "doc": "sú xi",
+  "hanviet": "thục tất",
+  "nghia": "quen thuộc, thân thuộc",
+  "level": 4,
+  "vd": {
+   "zh": "我对这个地方很熟悉。",
+   "py": "Wǒ duì zhège dìfang hěn shúxī.",
+   "vi": "Mình rất quen thuộc chỗ này."
+  },
+  "meo": "Thục (熟 = chín, thuần thục) + tất (hiểu rõ, “tường tất”). Đi một con đường tới mức “chín” — quen thuộc nhắm mắt cũng đi được."
+ },
+ {
+  "hanzi": "弹钢琴",
+  "pinyin": "tán gāngqín",
+  "doc": "thán cang chín",
+  "hanviet": "đàn cương cầm",
+  "nghia": "chơi đàn piano",
+  "level": 4,
+  "vd": {
+   "zh": "她从五岁开始学弹钢琴。",
+   "py": "Tā cóng wǔ suì kāishǐ xué tán gāngqín.",
+   "vi": "Cô ấy học chơi piano từ năm 5 tuổi."
+  },
+  "meo": "Đàn (弹 = gảy, đánh) + cương cầm (钢琴 = đàn thép = piano). Người Việt xưa cũng gọi piano là “dương cầm/cương cầm”. Con nhà người ta lúc nào cũng biết 弹钢琴."
+ },
+ {
+  "hanzi": "永远",
+  "pinyin": "yǒngyuǎn",
+  "doc": "dủng doẻn",
+  "hanviet": "vĩnh viễn",
+  "nghia": "mãi mãi",
+  "level": 4,
+  "vd": {
+   "zh": "我会永远爱你。",
+   "py": "Wǒ huì yǒngyuǎn ài nǐ.",
+   "vi": "Anh sẽ yêu em mãi mãi."
+  },
+  "meo": "Vĩnh viễn = 永远, Hán Việt y hệt. “Anh sẽ yêu em vĩnh viễn” — điều kiện áp dụng: đến khi có người mới."
+ }
+]

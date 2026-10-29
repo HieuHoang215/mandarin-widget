@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Ôn Từ Vựng</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@600;800;900&family=Noto+Sans+SC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  /* Game Show Flat: ink + cream + candy, one heavy outline, hard offset shadows. See DESIGN.md */
+  :root {
+    --ink: #1C1530; --cream: #FFF4DF; --white: #FFFFFF;
+    --red: #FF5A5F; --yellow: #FFD23F; --green: #3DDC84; --pink: #FF7EB6;
+    --sky: #4CC3F0; --orange: #FF9F43; --purple: #6C4FC4;
+    --set: #6C4FC4; --stripe: #7A5FD0;
+    --line: 3px; --shadow: 5px 5px 0 var(--ink);
+    --display: "Baloo 2", "Nunito", -apple-system, system-ui, sans-serif;
+    --body: "Nunito", -apple-system, "SF Pro Text", system-ui, sans-serif;
+    --han: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --pop: cubic-bezier(.34, 1.56, .64, 1);
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; overflow-x: hidden; }
+  body {
+    min-height: 100vh; min-height: 100dvh; color: var(--ink); font-family: var(--body);
+    background: var(--set);
+    padding: max(12px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) calc(132px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  }
+  .set {
+    position: fixed; inset: -60px; z-index: -1; background-color: var(--set);
+    background-image: repeating-linear-gradient(-45deg, var(--stripe) 0 22px, transparent 22px 44px);
+    animation: scroll 6s linear infinite; transition: background-color .2s;
+  }
+  @keyframes scroll { to { transform: translate(62.2px, 0); } }
+  .floor { position: fixed; left: 0; right: 0; bottom: 0; height: calc(96px + env(safe-area-inset-bottom)); z-index: -1;
+    background: rgba(28, 21, 48, .28); border-top: var(--line) solid var(--ink); }
+  main, header, .chips { max-width: 520px; margin-left: auto; margin-right: auto; }
+
+  /* ---------- HUD ---------- */
+  .hud { display: flex; gap: 10px; align-items: stretch; }
+  .sticker { background: var(--cream); border: var(--line) solid var(--ink); border-radius: 16px; box-shadow: 4px 4px 0 var(--ink); }
+  .meter { flex: 1; padding: 8px 12px 10px; min-width: 0; }
+  .meter-top { display: flex; align-items: baseline; gap: 6px; font-family: var(--display); font-weight: 800; line-height: 1; }
+  .meter-top .lbl { font-size: 13px; }
+  .meter-top b { font-size: 24px; margin-left: auto; }
+  .meter-top .of { font-size: 14px; opacity: .6; }
+  .bar { position: relative; height: 16px; margin-top: 6px; border: var(--line) solid var(--ink); border-radius: 99px; background: var(--white); overflow: hidden; }
+  .bar i { position: absolute; top: 0; bottom: 0; left: 0; border-right: var(--line) solid var(--ink); transition: width .6s var(--pop); }
+  .bar .learn { background: var(--yellow); }
+  .bar .master { background: var(--green); }
+  .bar .learn[style*="width: 0"], .bar .master[style*="width: 0"] { border-right: 0; }
+  .streak { width: 74px; display: grid; place-items: center; padding: 4px 0; font-family: var(--display); font-weight: 800; line-height: 1; }
+  .streak .flame { font-size: 26px; display: inline-block; animation: flicker 1.2s ease-in-out infinite; transform-origin: 50% 90%; }
+  .streak b { font-size: 20px; }
+  .streak small { font-size: 10px; opacity: .7; }
+  @keyframes flicker { 50% { transform: scale(1.12, .92) rotate(-4deg); } }
+  .chips { display: flex; gap: 8px; margin: 12px 0 18px; flex-wrap: wrap; }
+  .chip { font: 800 13px/1 var(--body); background: var(--ink); color: var(--white); padding: 7px 11px; border-radius: 99px; }
+  .chip b { color: var(--yellow); }
+
+  /* ---------- Card ---------- */
+  .card {
+    position: relative; background: var(--cream); border: 4px solid var(--ink); border-radius: 28px;
+    box-shadow: 8px 8px 0 var(--ink); padding: 34px 18px 22px; margin-top: 14px;
+  }
+  .banner {
+    position: absolute; top: -18px; left: 14px; transform: rotate(-4deg);
+    font: 800 17px/1 var(--display); padding: 9px 14px 6px; border: var(--line) solid var(--ink);
+    border-radius: 12px; box-shadow: 3px 3px 0 var(--ink); background: var(--yellow); white-space: nowrap;
+  }
+  .banner.new { background: var(--red); color: var(--white); -webkit-text-stroke: 4px var(--ink); paint-order: stroke fill; }
+  .lvl { position: absolute; top: 12px; right: 14px; font: 800 12px/1 var(--display); padding: 5px 8px 3px;
+    border: 2px solid var(--ink); border-radius: 8px; background: var(--white); }
+  .warn {
+    position: absolute; top: -16px; right: 12px; transform: rotate(5deg);
+    font: 800 13px/1 var(--display); padding: 7px 10px 5px; border: var(--line) solid var(--ink); border-radius: 12px;
+    background: var(--pink); box-shadow: 3px 3px 0 var(--ink);
+  }
+  .hanzi { font-family: var(--han); font-weight: 900; text-align: center; line-height: 1.15; margin: 6px 0 4px; word-break: keep-all; }
+  .prompt { text-align: center; font: 800 17px/1.4 var(--body); margin: 14px 0 6px; opacity: .75; }
+  .pinyin { text-align: center; font: 900 30px/1.2 var(--body); color: var(--red); }
+  .nghia {
+    display: table; margin: 10px auto 0; font: 800 24px/1.2 var(--display); text-align: center;
+    background: var(--yellow); padding: 8px 16px 4px; border: var(--line) solid var(--ink); border-radius: 14px;
+    box-shadow: 3px 3px 0 var(--ink); transform: rotate(-1.5deg);
+  }
+  .meta { text-align: center; font-size: 15px; margin-top: 12px; line-height: 1.5; }
+  .meta span { opacity: .65; }
+  .speak { display: flex; gap: 10px; justify-content: center; margin: 16px 0 4px; flex-wrap: wrap; }
+  h3 { font: 800 14px/1 var(--display); letter-spacing: .04em; text-transform: uppercase; margin: 22px 0 8px;
+    display: inline-block; background: var(--ink); color: var(--cream); padding: 6px 10px 3px; border-radius: 8px; }
+  .ex-zh { font: 700 22px/1.4 var(--han); }
+  .ex-py { color: var(--red); font-weight: 800; font-size: 15px; margin-top: 2px; }
+  .ex-vi { font-style: italic; margin-top: 2px; opacity: .75; }
+  .meo { font-size: 16px; line-height: 1.55; background: var(--white); border: var(--line) solid var(--ink); border-radius: 16px; padding: 12px 14px; }
+  .meo.hot {
+    margin-top: 18px; font-size: 18px; font-weight: 800; background: var(--pink);
+    box-shadow: 5px 5px 0 var(--ink); animation: nudge 2.4s ease-in-out infinite;
+  }
+  .meo.hot .tag { display: block; font: 800 15px/1 var(--display); margin-bottom: 6px; }
+  @keyframes nudge { 0%, 80%, 100% { transform: rotate(0); } 85% { transform: rotate(-1.5deg); } 90% { transform: rotate(1.5deg); } 95% { transform: rotate(-1deg); } }
+
+  /* ---------- Buttons ---------- */
+  button {
+    font: 800 15px/1 var(--body); color: var(--ink); background: var(--white); cursor: pointer;
+    border: var(--line) solid var(--ink); border-radius: 99px; padding: 11px 16px; min-height: 44px;
+    box-shadow: 3px 3px 0 var(--ink); transition: transform .08s, box-shadow .08s;
+  }
+  button:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--ink); }
+  button:disabled { pointer-events: none; }
+  .actions {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 5;
+    padding: 14px max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  }
+  .actions .row { max-width: 520px; margin: 0 auto; display: flex; gap: 10px; }
+  .big {
+    flex: 1; min-height: 64px; border-width: 4px; border-radius: 20px; box-shadow: 6px 6px 0 var(--ink);
+    font: 800 22px/1 var(--display); padding: 10px 12px 6px;
+  }
+  .big:active { transform: translate(6px, 6px); }
+  .big.go { background: var(--yellow); }
+  .big.bye { display: block; text-align: center; line-height: 1.25; padding: 14px 12px 10px; border: 4px solid var(--ink); background: var(--cream); font-size: 19px; animation: popin .35s var(--pop) both; }
+  .grade { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 16px; min-height: 76px; padding: 8px 4px 6px; }
+  .grade .emo { font-size: 28px; line-height: 1; }
+  .g0 { background: var(--red); color: var(--white); }
+  .g0 .t { -webkit-text-stroke: 4px var(--ink); paint-order: stroke fill; }
+  .g1 { background: var(--yellow); }
+  .g2 { background: var(--green); }
+
+  /* ---------- Telops ---------- */
+  .telop { font-family: var(--display); font-weight: 800; color: var(--white); -webkit-text-stroke: .16em var(--ink); paint-order: stroke fill; line-height: 1.05; }
+  .judge {
+    position: fixed; left: 0; right: 0; top: 34%; z-index: 9; text-align: center; pointer-events: none;
+    font-size: 64px; opacity: 0; transform: rotate(-6deg);
+  }
+  .judge.on { animation: stamp .9s var(--pop) forwards; }
+  .judge.j0 { color: var(--pink); } .judge.j1 { color: var(--yellow); } .judge.j2 { color: var(--yellow); }
+  @keyframes stamp {
+    0% { opacity: 1; transform: rotate(-6deg) scale(2.2); }
+    25% { opacity: 1; transform: rotate(-6deg) scale(1); }
+    75% { opacity: 1; transform: rotate(-6deg) scale(1.04); }
+    100% { opacity: 0; transform: rotate(-6deg) scale(.9); }
+  }
+
+  /* ---------- Idle & done ---------- */
+  .host { display: flex; align-items: flex-end; justify-content: center; gap: 4px; margin-top: 28px; }
+  .host .mascot { width: 104px; height: 121px; }
+  .bubble { position: relative; margin-bottom: 70px; background: var(--white); border: var(--line) solid var(--ink); border-radius: 18px;
+    padding: 10px 14px 8px; font: 800 17px/1.1 var(--display); box-shadow: 3px 3px 0 var(--ink); transform: rotate(-3deg); }
+  .center { position: relative; z-index: 1; text-align: center; padding-top: 6vh; }
+  .mascot { width: 150px; height: 175px; filter: drop-shadow(6px 6px 0 var(--ink)); }
+  .hop { animation: hop .5s cubic-bezier(.3, 0, .7, 1) infinite alternate; }
+  @keyframes hop { from { transform: translateY(0) scale(1.04, .96); } to { transform: translateY(-22px) scale(.98, 1.02); } }
+  .center .title { font-size: 44px; margin: 14px 0 6px; }
+  .center .sub { font: 800 17px/1.4 var(--body); color: var(--white); text-shadow: 2px 2px 0 var(--ink); }
+  .bigstat { margin: 22px auto 0; padding: 18px 16px; text-align: left; }
+  .bigstat .num { font: 800 54px/1 var(--display); }
+  .bigstat .num small { font-size: 22px; opacity: .55; }
+  .bigstat .bar { height: 26px; }
+  .bigstat .row { display: flex; justify-content: space-between; font-weight: 800; font-size: 14px; margin-top: 10px; }
+  .confetti { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+  .confetti i { position: absolute; top: -20px; width: 10px; height: 16px; border: 2px solid var(--ink); animation: fall linear infinite; }
+  @keyframes fall { to { transform: translateY(110vh) rotate(720deg); } }
+
+  /* ---------- Entrances ---------- */
+  .drop { animation: drop .45s var(--pop) both; }
+  @keyframes drop { from { transform: translateY(-120vh) rotate(-4deg); } }
+  .punch { animation: punch .32s var(--pop); }
+  @keyframes punch { 0% { transform: scale(1.05, .94); } 100% { transform: scale(1); } }
+  .reveal > * { animation: popin .35s var(--pop) both; }
+  .reveal > *:nth-child(2) { animation-delay: .04s; } .reveal > *:nth-child(3) { animation-delay: .08s; }
+  .reveal > *:nth-child(4) { animation-delay: .12s; } .reveal > *:nth-child(5) { animation-delay: .16s; }
+  .reveal > *:nth-child(n+6) { animation-delay: .2s; }
+  @keyframes popin { from { opacity: 0; transform: scale(.6); } }
+  .exit { animation: exit .28s ease-in both; }
+  @keyframes exit { to { transform: translateY(110vh) rotate(6deg); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .judge.on { opacity: 1; transform: rotate(-6deg); }
+  }
+</style>
+</head>
+<body>
+<div class="set" aria-hidden="true"></div>
+<div class="floor" aria-hidden="true"></div>
+
+<header class="hud" id="hud">
+  <div class="meter sticker">
+    <div class="meter-top"><span class="lbl">Đã thuộc</span><b id="mastered">0</b><span class="of">/ <span id="total">1000</span></span></div>
+    <div class="bar" aria-hidden="true"><i class="learn" id="barLearn" style="width: 0%"></i><i class="master" id="barMaster" style="width: 0%"></i></div>
+  </div>
+  <div class="streak sticker" aria-label="Chuỗi ngày học">
+    <span class="flame">🔥</span><b id="streak">0</b><small>ngày</small>
+  </div>
+</header>
+<div class="chips" id="chips"></div>
+
+<main id="stage"></main>
+<div class="judge telop" id="judge" aria-live="polite"></div>
+<div class="actions" id="actions"></div>
+
+<script>
+const SETS = [
+  ["#6C4FC4", "#7A5FD0"], // grape
+  ["#FF9F43", "#FFB063"], // tangerine
+  ["#3FB7EA", "#5CC4EF"], // sky
+  ["#FF77AE", "#FF8DBC"], // bubblegum
+  ["#22B39F", "#3BC2AE"], // teal
+  ["#8BD346", "#9CDB60"], // lime
+];
+const JUDGE = [
+  { text: "Ối dồi ôi!", cls: "j0" },
+  { text: "Tạm ổn!", cls: "j1" },
+  { text: "Đỉnh quá!", cls: "j2" },
+];
+const BODY = ["#4CC3F0", "#FF9F43", "#FF7EB6", "#3DDC84", "#FFD23F"];
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const $ = id => document.getElementById(id);
+let cur = null, revealed = false, finish = null, setIdx = 0;
+
+function esc(s) {
+  return String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+function once(fn) {
+  let called = false;
+  return v => { if (called) return; called = true; if (typeof fn === "function") fn(v); };
+}
+
+function speak(text, rate) {
+  if (!("speechSynthesis" in window) || !text) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "zh-CN";
+  u.rate = rate;
+  const v = speechSynthesis.getVoices().find(v => v.lang.replace("_", "-").startsWith("zh-CN"));
+  if (v) u.voice = v;
+  speechSynthesis.speak(u);
+}
+
+function mascot(color, shout) {
+  const arms = shout
+    ? `<path d="M26 82 L8 34 M94 82 L112 34" stroke="#1C1530" stroke-width="6" stroke-linecap="round"/>
+       <circle cx="8" cy="30" r="9" fill="#fff" stroke="#1C1530" stroke-width="5"/>
+       <circle cx="112" cy="30" r="9" fill="#fff" stroke="#1C1530" stroke-width="5"/>`
+    : `<circle cx="20" cy="104" r="9" fill="#fff" stroke="#1C1530" stroke-width="5"/>
+       <circle cx="100" cy="104" r="9" fill="#fff" stroke="#1C1530" stroke-width="5"/>`;
+  const mouth = shout
+    ? `<path d="M50 84 Q60 104 70 84 Z" fill="#1C1530"/>`
+    : `<path d="M52 84 Q60 92 68 84" fill="none" stroke="#1C1530" stroke-width="4" stroke-linecap="round"/>`;
+  return `<svg class="mascot" viewBox="0 0 120 140" aria-hidden="true">
+    <path d="M60 28 L60 10" stroke="#1C1530" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="60" cy="9" r="7" fill="#FFD23F" stroke="#1C1530" stroke-width="4"/>
+    ${shout ? arms : ""}
+    <path d="M24 128 Q16 30 60 28 Q104 30 96 128 Q60 136 24 128 Z" fill="${color}" stroke="#1C1530" stroke-width="6" stroke-linejoin="round"/>
+    <ellipse cx="60" cy="110" rx="22" ry="16" fill="#FFF4DF" opacity=".75"/>
+    <ellipse cx="47" cy="68" rx="6" ry="8" fill="#1C1530"/><ellipse cx="73" cy="68" rx="6" ry="8" fill="#1C1530"/>
+    <circle cx="49" cy="65" r="2.4" fill="#fff"/><circle cx="75" cy="65" r="2.4" fill="#fff"/>
+    <ellipse cx="36" cy="82" rx="7" ry="4" fill="#FF7EB6"/><ellipse cx="84" cy="82" rx="7" ry="4" fill="#FF7EB6"/>
+    ${mouth}${shout ? "" : arms}
+  </svg>`;
+}
+
+function applySet(i) {
+  const [bg, stripe] = SETS[i % SETS.length];
+  document.documentElement.style.setProperty("--set", bg);
+  document.documentElement.style.setProperty("--stripe", stripe);
+}
+
+function renderHud(s) {
+  s = s || {};
+  const total = s.total || 1000, mastered = s.mastered || 0, learning = s.learning || 0;
+  $("mastered").textContent = mastered;
+  $("total").textContent = total;
+  $("streak").textContent = s.streak || 0;
+  $("barMaster").style.width = Math.min(100, mastered / total * 100) + "%";
+  $("barLearn").style.width = Math.min(100, (mastered + learning) / total * 100) + "%";
+  $("chips").innerHTML =
+    `<span class="chip">📚 Cần ôn <b>${s.dueLeft || 0}</b></span>` +
+    `<span class="chip">✨ Từ mới <b>${s.newLeft || 0}</b></span>` +
+    `<span class="chip">🌱 Đang học <b>${learning}</b></span>`;
+}
+
+function hanziSize(h) {
+  const n = [...String(h || "")].length;
+  return n <= 1 ? 120 : n === 2 ? 100 : n === 3 ? 80 : 62;
+}
+
+function cardHTML() {
+  const w = cur.word, isNew = cur.kind === "new", lapses = cur.lapses || 0, hot = lapses >= 3;
+  const vd = w.vd || {};
+  let html = `<article class="card" id="card">
+    <div class="banner ${isNew ? "new" : ""}">${isNew ? "Từ mới!" : "Ôn bài nè"}</div>
+    ${hot ? `<div class="warn">😵‍💫 Quên ${lapses} lần rồi</div>` : ""}
+    ${w.level != null && !hot ? `<div class="lvl">HSK ${esc(w.level)}</div>` : ""}
+    <div class="hanzi" style="font-size:${hanziSize(w.hanzi)}px">${esc(w.hanzi)}</div>`;
+  if (!revealed) {
+    return html + `<p class="prompt">Nghĩa là gì? Đọc sao ta? 🤔<br><span style="font-size:14px">Nghĩ trong đầu rồi lật thẻ nha</span></p></article>
+      <div class="host"><div class="bubble">${hot ? "Lần này nhớ nha! 🙏" : "Nhớ không đó? 👀"}</div><div class="hop">${mascot(BODY[setIdx % BODY.length], false)}</div></div>`;
+  }
+  const meo = `<div class="meo ${hot ? "hot" : ""}">${hot ? `<span class="tag">🚨 Mẹo cứu nguy</span>` : "💡 "}${esc(w.meo)}</div>`;
+  html += `<div class="reveal">
+      <div class="pinyin">${esc(w.pinyin)}</div>
+      <div><div class="nghia">${esc(w.nghia)}</div></div>
+      <div class="meta">đọc gần giống: <b>${esc(w.doc)}</b><br><span>Hán Việt:</span> <b>${esc(w.hanviet)}</b></div>
+      <div class="speak"><button data-say="word">🔊 Nghe</button><button data-say="slow">🐢 Chậm</button></div>
+      ${hot ? meo : ""}
+      <div><h3>Ví dụ</h3>
+        <div class="ex-zh">${esc(vd.zh)}</div>
+        <div class="ex-py">${esc(vd.py)}</div>
+        <div class="ex-vi">${esc(vd.vi)}</div>
+        <div class="speak" style="justify-content:flex-start"><button data-say="ex">🔊 Nghe câu ví dụ</button></div>
+      </div>
+      ${hot ? "" : `<div><h3>Mẹo nhớ</h3>${meo}</div>`}
+    </div></article>`;
+  return html;
+}
+
+function renderActions() {
+  const a = $("actions");
+  if (!revealed) {
+    a.innerHTML = `<div class="row"><button class="big go" id="flip">Lật thẻ 🃏</button></div>`;
+  } else if (cur.kind === "new") {
+    a.innerHTML = `<div class="row"><button class="big go" data-grade="1">Đã xem, nhớ rồi! ✍️</button></div>`;
+  } else {
+    a.innerHTML = `<div class="row">
+      <button class="big grade g0" data-grade="0"><span class="emo">😵</span><span class="t">Quên</span></button>
+      <button class="big grade g1" data-grade="1"><span class="emo">🤔</span><span class="t">Hơi nhớ</span></button>
+      <button class="big grade g2" data-grade="2"><span class="emo">😎</span><span class="t">Nhớ rồi</span></button></div>`;
+  }
+}
+
+function renderCard(anim) {
+  $("stage").innerHTML = cardHTML();
+  if (anim) $("card").classList.add(anim);
+  renderActions();
+}
+
+function flip() {
+  if (!cur || revealed) return;
+  revealed = true;
+  renderCard("punch");
+  if (!reduced) speak(cur.word.hanzi, 0.8);
+}
+
+function grade(g) {
+  if (!cur || !revealed || !finish) return;
+  const f = finish;
+  finish = null;
+  $("actions").querySelectorAll("button").forEach(b => b.disabled = true);
+  const j = cur.kind === "new" ? { text: "Ghi nhớ! ✍️", cls: "j1" } : JUDGE[g];
+  const el = $("judge");
+  el.className = "judge telop " + j.cls;
+  el.textContent = j.text;
+  void el.offsetWidth;
+  el.classList.add("on");
+  $("card").classList.add("exit");
+  setTimeout(() => f({ grade: g }), reduced ? 350 : 520);
+}
+
+document.addEventListener("click", e => {
+  const say = e.target.closest("[data-say]");
+  if (say && cur) {
+    const w = cur.word;
+    if (say.dataset.say === "word") speak(w.hanzi, 0.8);
+    if (say.dataset.say === "slow") speak(w.hanzi, 0.45);
+    if (say.dataset.say === "ex") speak((w.vd || {}).zh, 0.8);
+    return;
+  }
+  if (e.target.closest("#flip")) return flip();
+  const g = e.target.closest("[data-grade]");
+  if (g) return grade(Number(g.dataset.grade));
+  if (e.target.closest("#card") && !revealed) flip();
+});
+
+window.showCard = function (card, stats, done) {
+  cur = card;
+  revealed = card.kind !== "review";
+  finish = once(done);
+  applySet(setIdx++);
+  $("hud").style.display = $("chips").style.display = "";
+  renderHud(stats);
+  renderCard("drop");
+};
+
+window.showDone = function (stats, done) {
+  cur = null;
+  const fin = once(done);
+  stats = stats || {};
+  applySet(0);
+  renderHud(stats);
+  $("hud").style.display = $("chips").style.display = "none";
+  const total = stats.total || 1000, mastered = stats.mastered || 0, learning = stats.learning || 0;
+  const pct = Math.round(mastered / total * 1000) / 10;
+  const left = Math.max(0, total - mastered);
+  const colors = ["#FFD23F", "#FF5A5F", "#3DDC84", "#4CC3F0", "#FF7EB6", "#FFF4DF"];
+  let bits = "";
+  if (!reduced) for (let k = 0; k < 36; k++) {
+    bits += `<i style="left:${Math.random() * 100}%;background:${colors[k % colors.length]};animation-duration:${2.4 + Math.random() * 2.2}s;animation-delay:${-Math.random() * 4}s"></i>`;
+  }
+  $("stage").innerHTML = `<div class="confetti" aria-hidden="true">${bits}</div>
+    <section class="center">
+      <div class="hop" style="display:inline-block">${mascot(BODY[mastered % BODY.length], true)}</div>
+      <div class="title telop drop">Xong bài rồi!</div>
+      <div class="sub">🔥 Chuỗi ${stats.streak || 0} ngày — giữ lửa nha!</div>
+      <div class="bigstat sticker drop">
+        <div class="num">${mastered}<small> / ${total} từ</small></div>
+        <div class="bar" style="margin-top:12px"><i class="learn" style="width:${Math.min(100, (mastered + learning) / total * 100)}%"></i><i class="master" style="width:${Math.min(100, mastered / total * 100)}%"></i></div>
+        <div class="row"><span>✅ Thuộc ${pct}%</span><span>🌱 Đang học ${learning}</span></div>
+        <div class="row" style="opacity:.7"><span>Còn ${left} từ nữa là trùm tiếng Trung 👑</span></div>
+      </div>
+    </section>`;
+  $("actions").innerHTML = `<div class="row"><button class="big go" id="fin">Xong 🎉</button></div>`;
+  $("fin").onclick = () => {
+    fin({});
+    // Scriptable can't dismiss the WebView from code; point at its Close button instead.
+    $("actions").innerHTML = `<div class="row"><div class="big bye">Bấm <b>Close</b> ở góc trên để thoát 👋</div></div>`;
+  };
+};
+
+function showIdle(msg) {
+  $("hud").style.display = $("chips").style.display = "none";
+  $("stage").innerHTML = `<section class="center">
+      <div class="hop" style="display:inline-block">${mascot("#4CC3F0", false)}</div>
+      <div class="title telop">Sẵn sàng chưa?</div>
+      <div class="sub">${esc(msg || "Đang xào bài… chờ xíu nha 🃏")}</div>
+    </section>`;
+  $("actions").innerHTML = "";
+}
+
+if (window.speechSynthesis) speechSynthesis.getVoices(); // warm up voice list (iOS loads it lazily)
+showIdle();
+
+// ---------- Browser demo: review.html?demo=1 ----------
+if (new URLSearchParams(location.search).get("demo") === "1") {
+  fetch("words.json").then(r => r.json()).then(words => {
+    const plan = [
+      { i: 0, kind: "review", lapses: 0 }, { i: 1, kind: "new", lapses: 0 },
+      { i: 2, kind: "review", lapses: 3 }, { i: 3, kind: "new", lapses: 0 },
+      { i: 4, kind: "review", lapses: 1 },
+    ];
+    const queue = plan.map(p => ({ word: words[p.i % words.length], kind: p.kind, lapses: p.lapses }));
+    const stats = { mastered: 128, learning: 42, dueLeft: 3, newLeft: 2, total: 1000, streak: 6 };
+    const next = () => {
+      const card = queue.shift();
+      if (!card) return showDone(stats, () => console.log("[demo] session finished"));
+      showCard(card, { ...stats }, res => {
+        console.log("[demo] grade", card.word.hanzi, card.kind, JSON.stringify(res));
+        if (card.kind === "new") { stats.newLeft--; stats.learning++; }
+        else {
+          stats.dueLeft--;
+          if (res.grade === 2) { stats.mastered++; stats.learning--; }
+        }
+        next();
+      });
+    };
+    setTimeout(next, 900);
+  }).catch(err => showIdle("Không tải được words.json 😢 " + err));
+}
+</script>
+</body>
+</html>
