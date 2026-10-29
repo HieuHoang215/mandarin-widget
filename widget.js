@@ -316,6 +316,58 @@ function drawWidget(family, view) {
 }
 // --- DRAW END ---
 
+// Lock-screen widgets: random words on the system's glass background.
+function buildLockWidget(family, words) {
+  const w = new ListWidget();
+  w.url = runURL;
+  w.refreshAfterDate = new Date(Date.now() + 15 * 60 * 1000);
+  const pick = () => words[Math.floor(Math.random() * words.length)];
+  const short = m => m.split(/[,;(]/)[0].trim();
+  const line = (stack, s, font, opacity) => {
+    const t = stack.addText(s);
+    t.font = font;
+    t.textOpacity = opacity || 1;
+    t.lineLimit = 1;
+    t.minimumScaleFactor = 0.6;
+    return t;
+  };
+
+  if (family === "accessoryInline") {
+    const x = pick();
+    line(w, x.hanzi + " " + x.pinyin + " · " + short(x.nghia), Font.semiboldSystemFont(12));
+    return w;
+  }
+
+  w.addAccessoryWidgetBackground = true;
+  if (family === "accessoryCircular") {
+    const x = pick();
+    line(w, x.pinyin, Font.semiboldRoundedSystemFont(9), 0.7).centerAlignText();
+    line(w, x.hanzi, Font.heavyRoundedSystemFont(x.hanzi.length > 2 ? 16 : 22)).centerAlignText();
+    return w;
+  }
+
+  // accessoryRectangular: two words side by side, or one if they're long.
+  const first = pick();
+  let second = pick();
+  while (second === first) second = pick();
+  const shown = first.hanzi.length + second.hanzi.length > 4 ? [first] : [first, second];
+  w.setPadding(4, 8, 4, 8);
+  const row = w.addStack();
+  row.centerAlignContent();
+  shown.forEach((x, i) => {
+    if (i) row.addSpacer(10);
+    const col = row.addStack();
+    col.layoutVertically();
+    line(col, x.pinyin, Font.semiboldRoundedSystemFont(11), 0.75);
+    const r = col.addStack();
+    r.bottomAlignContent();
+    line(r, x.hanzi, Font.heavyRoundedSystemFont(24));
+    r.addSpacer(4);
+    line(r, short(x.nghia), Font.semiboldRoundedSystemFont(11), 0.75);
+  });
+  return w;
+}
+
 function buildWidget(state, words) {
   const now = Date.now();
   rollDay(state, now);
@@ -401,7 +453,10 @@ try {
   const words = JSON.parse(await loadSiteText("words.json"));
   const state = await loadState();
 
-  if (config.runsInWidget) {
+  const family = config.widgetFamily || "";
+  if (config.runsInWidget && family.startsWith("accessory")) {
+    Script.setWidget(buildLockWidget(family, words));
+  } else if (config.runsInWidget) {
     Script.setWidget(buildWidget(state, words));
   } else {
     await runSession(state, words);
