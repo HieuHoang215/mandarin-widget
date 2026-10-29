@@ -8,7 +8,7 @@ const core = src.slice(src.indexOf("// --- SRS CORE START"), src.indexOf("// ---
 const NEW_PER_DAY = Number(process.argv[2] || 10);
 const MAX_DUE_FOR_NEW = 50;
 const api = new Function("NEW_PER_DAY", "MAX_DUE_FOR_NEW", core +
-  "return { HOUR, MASTER_BOX, newState, applyGrade, buildSession, stats, markStudied };")(NEW_PER_DAY, MAX_DUE_FOR_NEW);
+  "return { HOUR, MASTER_BOX, newState, applyGrade, buildSession, stats, markStudied, nextLockWord };")(NEW_PER_DAY, MAX_DUE_FOR_NEW);
 
 const words = Array.from({ length: 1000 }, (_, i) => ({ hanzi: "w" + i }));
 
@@ -47,8 +47,14 @@ for (let day = 0; day < 400 && doneDay === null; day++) {
   if (mastered === words.length) doneDay = day + 1;
 }
 
-// Every word introduced exactly once, in list order — nothing skipped.
-assert.deepStrictEqual(introOrder, words.map(w => w.hanzi));
+// Every word introduced exactly once, nothing skipped, and not in list order.
+assert.deepStrictEqual([...introOrder].sort(), words.map(w => w.hanzi).sort());
+assert.notDeepStrictEqual(introOrder, words.map(w => w.hanzi));
+
+// Lock screen: one full cycle shows every word exactly once.
+const lockState = api.newState();
+const cycle = words.map(() => api.nextLockWord(lockState, words));
+assert.strictEqual(new Set(cycle).size, words.length);
 assert.ok(doneDay, "not all words mastered within 400 days");
 assert.strictEqual(state.streak, doneDay);
 

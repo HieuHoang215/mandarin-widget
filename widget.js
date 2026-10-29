@@ -67,14 +67,40 @@ function newAllowed(state, now) {
   return Math.max(0, NEW_PER_DAY - state.newToday);
 }
 
-// Words are introduced strictly in list order, so none is ever skipped.
+function shuffle(list, rand) {
+  for (let i = list.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [list[i], list[j]] = [list[j], list[i]];
+  }
+  return list;
+}
+
+// A random but fixed introduction order, saved in state. Words added to the list later
+// are shuffled onto the end, so every word still comes up exactly once.
+function ensureOrder(state, words, rand) {
+  const known = new Set(words.map(w => w.hanzi));
+  const order = (state.order || []).filter(h => known.has(h));
+  const have = new Set(order);
+  const missing = words.map(w => w.hanzi).filter(h => !have.has(h));
+  state.order = order.concat(shuffle(missing, rand || Math.random));
+  return state.order;
+}
+
 function nextNewWords(state, words, n) {
   const out = [];
-  for (const w of words) {
+  for (const h of ensureOrder(state, words)) {
     if (out.length >= n) break;
-    if (!state.cards[w.hanzi]) out.push(w.hanzi);
+    if (!state.cards[h]) out.push(h);
   }
   return out;
+}
+
+// Shuffle-bag for the lock screen: every word once per cycle, in random order.
+function nextLockWord(state, words) {
+  const known = new Set(words.map(w => w.hanzi));
+  state.lockBag = (state.lockBag || []).filter(h => known.has(h));
+  if (!state.lockBag.length) state.lockBag = shuffle(words.map(w => w.hanzi), Math.random);
+  return state.lockBag.pop();
 }
 
 function buildSession(state, words, now) {
@@ -317,11 +343,12 @@ function drawWidget(family, view) {
 // --- DRAW END ---
 
 // Lock-screen widgets: random words on the system's glass background.
-function buildLockWidget(family, words) {
+function buildLockWidget(family, state, words) {
   const w = new ListWidget();
   w.url = runURL;
   w.refreshAfterDate = new Date(Date.now() + 15 * 60 * 1000);
-  const pick = () => words[Math.floor(Math.random() * words.length)];
+  const byHanzi = new Map(words.map(x => [x.hanzi, x]));
+  const pick = () => byHanzi.get(nextLockWord(state, words));
   const short = m => m.split(/[,;(]/)[0].trim();
   const line = (stack, s, font, opacity) => {
     const t = stack.addText(s);
@@ -348,9 +375,12 @@ function buildLockWidget(family, words) {
 
   // accessoryRectangular: two words side by side, or one if they're long.
   const first = pick();
-  let second = pick();
-  while (second === first) second = pick();
-  const shown = first.hanzi.length + second.hanzi.length > 4 ? [first] : [first, second];
+  const shown = [first];
+  if (first.hanzi.length <= 2) {
+    const second = pick();
+    // A long second word doesn't fit; it goes back in the bag for next time.
+    if (second.hanzi.length <= 2) shown.push(second); else state.lockBag.unshift(second.hanzi);
+  }
   w.setPadding(4, 8, 4, 8);
   const row = w.addStack();
   row.centerAlignContent();
@@ -455,9 +485,11 @@ try {
 
   const family = config.widgetFamily || "";
   if (config.runsInWidget && family.startsWith("accessory")) {
-    Script.setWidget(buildLockWidget(family, words));
+    Script.setWidget(buildLockWidget(family, state, words));
+    saveState(state);
   } else if (config.runsInWidget) {
     Script.setWidget(buildWidget(state, words));
+    saveState(state);   // keeps the random order the widget just created
   } else {
     await runSession(state, words);
     saveState(state);
