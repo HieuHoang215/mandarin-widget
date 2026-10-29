@@ -248,16 +248,32 @@ function buildWidget(state, words) {
   return w;
 }
 
+const wait = ms => new Promise(r => Timer.schedule(ms, false, r));
+
 async function runSession(state, words) {
-  const html = await loadSiteText("review.html");
   const byHanzi = new Map(words.map(w => [w.hanzi, w]));
   const queue = buildSession(state, words, Date.now());
 
   const wv = new WebView();
-  await wv.loadHTML(html, SITE);
   let closed = false;
   const dismissed = wv.present(true).then(() => { closed = true; return null; });
-  const ask = js => Promise.race([wv.evaluateJavaScript(js, true), dismissed]);
+  try {
+    await wv.loadURL(SITE + "review.html?v=" + Date.now());
+    loadSiteText("review.html").catch(() => {});   // refresh the offline copy
+  } catch (e) {
+    await wv.loadHTML(await loadSiteText("review.html"), SITE);
+  }
+  // Wait until the page script has defined its API.
+  for (let i = 0; i < 50 && !closed; i++) {
+    if (await wv.evaluateJavaScript("typeof showCard === 'function'")) break;
+    await wait(200);
+  }
+  const ask = async js => {
+    const res = await Promise.race([
+      wv.evaluateJavaScript(`try { ${js} } catch (e) { completion({ error: String(e) }) }`, true), dismissed]);
+    if (res && res.error) throw new Error("review.html: " + res.error);
+    return res;
+  };
 
   while (queue.length && !closed) {
     const item = queue.shift();
@@ -281,14 +297,30 @@ async function runSession(state, words) {
   }
 }
 
-const words = JSON.parse(await loadSiteText("words.json"));
-const state = await loadState();
+try {
+  const words = JSON.parse(await loadSiteText("words.json"));
+  const state = await loadState();
 
-if (config.runsInWidget) {
-  Script.setWidget(buildWidget(state, words));
-} else {
-  await runSession(state, words);
-  saveState(state);
+  if (config.runsInWidget) {
+    Script.setWidget(buildWidget(state, words));
+  } else {
+    await runSession(state, words);
+    saveState(state);
+  }
+  try { await scheduleReminder(state, words); } catch (e) { console.log("reminder: " + e); }
+} catch (e) {
+  // Show the error on screen so it can be screenshotted.
+  console.error(e);
+  if (config.runsInWidget) {
+    const w = new ListWidget();
+    w.addText("⚠️ " + e.message);
+    Script.setWidget(w);
+  } else {
+    const a = new Alert();
+    a.title = "Lỗi";
+    a.message = String(e && e.message || e);
+    a.addAction("OK");
+    await a.presentAlert();
+  }
 }
-try { await scheduleReminder(state, words); } catch (e) { console.log("reminder: " + e); }
 Script.complete();
