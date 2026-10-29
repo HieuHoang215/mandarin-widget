@@ -160,20 +160,161 @@ async function scheduleReminder(state, words) {
   await n.schedule();
 }
 
+// --- DRAW START (widget art, drawn as one image; previewed by preview-widget.js) ---
 // Game Show Flat palette (see DESIGN.md).
-const HANZI = new Color("#FFF4DF");
-const PINYIN = Color.white();
-const MEANING = new Color("#FFD23F");
-const SOFT = new Color("#E3DBFF");
+const INK = "#1C1530", CREAM = "#FFF4DF", WHITE = "#FFFFFF", RED = "#FF5A5F",
+  YELLOW = "#FFD23F", GREEN = "#3DDC84", PINK = "#FF7EB6", ORANGE = "#FF9F43", SOFT_INK = "#5B5270";
+const SETS = [["#6C4FC4", "#7A5FD0"], ["#FF9F43", "#FFB063"], ["#3FB7EA", "#5CC4EF"],
+  ["#FF77AE", "#FF8DBC"], ["#22B39F", "#3BC2AE"], ["#8BD346", "#9CDB60"]];
+const SIZES = { small: [170, 170], medium: [364, 170], large: [364, 382] };
 
-function add(stack, text, font, color, lines) {
-  const t = stack.addText(text);
-  t.font = font;
-  t.textColor = color || Color.white();
-  if (lines) t.lineLimit = lines;
-  t.minimumScaleFactor = 0.7;
-  return t;
+function rr(x, y, w, h, r) {
+  const p = new Path();
+  p.addRoundedRect(new Rect(x, y, w, h), r, r);
+  return p;
 }
+
+function fill(ctx, path, color) {
+  ctx.addPath(path);
+  ctx.setFillColor(new Color(color));
+  ctx.fillPath();
+}
+
+// Ink-outlined rounded box with a hard offset shadow.
+function box(ctx, x, y, w, h, r, color, shadow = 4) {
+  if (shadow) fill(ctx, rr(x + shadow, y + shadow, w, h, r), INK);
+  fill(ctx, rr(x, y, w, h, r), color);
+  ctx.addPath(rr(x, y, w, h, r));
+  ctx.setStrokeColor(new Color(INK));
+  ctx.setLineWidth(2.5);
+  ctx.strokePath();
+}
+
+function txt(ctx, s, x, y, w, h, font, color, align) {
+  ctx.setFont(font);
+  ctx.setTextColor(new Color(color));
+  if (align === "center") ctx.setTextAlignedCenter();
+  else if (align === "right") ctx.setTextAlignedRight();
+  else ctx.setTextAlignedLeft();
+  ctx.drawTextInRect(s, new Rect(x, y, w, h));
+}
+
+function stripes(ctx, W, H, set) {
+  fill(ctx, rr(0, 0, W, H, 0), set[0]);
+  for (let x = -H; x < W + H; x += 30) {
+    const p = new Path();
+    p.addLines([new Point(x, 0), new Point(x + 15, 0), new Point(x + 15 - H, H), new Point(x - H, H)]);
+    p.closeSubpath();
+    fill(ctx, p, set[1]);
+  }
+}
+
+// The bean mascot from review.html.
+function bean(ctx, cx, cy, s) {
+  ctx.setStrokeColor(new Color(INK));
+  ctx.setLineWidth(2.5 * s);
+  const body = rr(cx - 18 * s, cy - 22 * s, 36 * s, 46 * s, 18 * s);
+  fill(ctx, body, ORANGE);
+  ctx.addPath(body);
+  ctx.strokePath();
+  fill(ctx, rr(cx - 9 * s, cy + 4 * s, 18 * s, 13 * s, 6.5 * s), "#FFD9B0");
+  for (const dx of [-7, 7]) {
+    fill(ctx, rr(cx + dx * s - 3.5 * s, cy - 10 * s, 7 * s, 8 * s, 3.5 * s), INK);
+    fill(ctx, rr(cx + dx * s - 1 * s, cy - 9 * s, 2.5 * s, 2.5 * s, 1.25 * s), WHITE);
+  }
+}
+
+function hanziSize(hanzi, base) {
+  return [base, base, base * 0.82, base * 0.64, base * 0.52][Math.min(hanzi.length, 4)];
+}
+
+function pill(ctx, s, x, y, w, color, align) {
+  box(ctx, x, y, w, 24, 12, color, 2.5);
+  txt(ctx, s, x + 8, y + 4, w - 16, 18, Font.heavyRoundedSystemFont(12), INK, align || "center");
+}
+
+// view = { mode: "new"|"review"|"rest", word, mastered, total, streak, due }
+function drawWidget(family, view) {
+  const [W, H] = SIZES[family] || SIZES.large;
+  const ctx = new DrawContext();
+  ctx.size = new Size(W, H);
+  ctx.respectScreenScale = true;
+  const w = view.word;
+  stripes(ctx, W, H, SETS[w.id % SETS.length]);
+
+  const label = view.mode === "review" ? "🧠 Ôn bài · " + view.due
+    : view.mode === "new" ? "✨ Từ mới!" : "🎉 Xong hôm nay";
+  const labelColor = view.mode === "review" ? PINK : view.mode === "new" ? YELLOW : GREEN;
+  const score = "🏆 " + view.mastered + "/" + view.total + (view.streak ? "  🔥" + view.streak : "");
+  const recall = view.mode === "review";
+
+  if (family === "small") {
+    box(ctx, 10, 12, W - 24, H - 26, 20, CREAM);
+    if (recall) {
+      txt(ctx, w.hanzi, 10, 26, W - 24, 70, Font.heavyRoundedSystemFont(hanziSize(w.hanzi, 58)), INK, "center");
+      txt(ctx, "Nhớ không? 👀", 10, 104, W - 24, 20, Font.heavyRoundedSystemFont(14), INK, "center");
+      txt(ctx, view.due + " từ chờ ôn", 10, 124, W - 24, 18, Font.boldRoundedSystemFont(11), SOFT_INK, "center");
+    } else {
+      txt(ctx, w.hanzi, 10, 20, W - 24, 58, Font.heavyRoundedSystemFont(hanziSize(w.hanzi, 48)), INK, "center");
+      txt(ctx, w.pinyin, 10, 78, W - 24, 22, Font.heavyRoundedSystemFont(17), RED, "center");
+      box(ctx, 22, 108, W - 48, 32, 12, YELLOW, 2.5);
+      txt(ctx, w.nghia, 26, 114, W - 56, 22, Font.heavyRoundedSystemFont(13), INK, "center");
+    }
+    return ctx.getImage();
+  }
+
+  if (family === "medium") {
+    box(ctx, 12, 12, W - 28, H - 28, 22, CREAM);
+    if (recall) {
+      txt(ctx, w.hanzi, 20, 30, 170, 90, Font.heavyRoundedSystemFont(hanziSize(w.hanzi, 72)), INK, "center");
+      pill(ctx, label, 200, 24, 136, PINK);
+      txt(ctx, "Nhớ nghĩa không?", 196, 60, 150, 22, Font.heavyRoundedSystemFont(15), INK, "left");
+      txt(ctx, "Chạm để lật thẻ 👆", 196, 84, 150, 20, Font.boldRoundedSystemFont(12), SOFT_INK, "left");
+      bean(ctx, 300, 120, 0.7);
+    } else {
+      txt(ctx, w.hanzi, 22, 22, 150, 64, Font.heavyRoundedSystemFont(hanziSize(w.hanzi, 54)), INK, "center");
+      txt(ctx, w.pinyin, 22, 86, 150, 22, Font.heavyRoundedSystemFont(17), RED, "center");
+      box(ctx, 30, 112, 134, 30, 12, YELLOW, 2.5);
+      txt(ctx, w.nghia, 34, 117, 126, 22, Font.heavyRoundedSystemFont(13), INK, "center");
+      pill(ctx, label, 186, 22, 150, labelColor);
+      const meoFont = w.meo.length > 140 ? 11 : 12;
+      txt(ctx, "💡 " + w.meo, 186, 52, 152, 96, Font.semiboldRoundedSystemFont(meoFont), INK, "left");
+    }
+    return ctx.getImage();
+  }
+
+  // Large
+  pill(ctx, label, 14, 14, 150, labelColor);
+  pill(ctx, score, W - 168, 14, 150, CREAM);
+  const cx = 14, cy = 50, cw = W - 32, ch = H - 68;
+  box(ctx, cx, cy, cw, ch, 24, CREAM, 5);
+
+  if (recall) {
+    txt(ctx, w.hanzi, cx, cy + 40, cw, 120, Font.heavyRoundedSystemFont(hanziSize(w.hanzi, 104)), INK, "center");
+    txt(ctx, "Nghĩa là gì? Đọc sao ta? 🤔", cx, cy + 180, cw, 24, Font.heavyRoundedSystemFont(17), INK, "center");
+    txt(ctx, "Nghĩ trong đầu rồi chạm để lật thẻ", cx, cy + 206, cw, 20, Font.boldRoundedSystemFont(13), SOFT_INK, "center");
+    bean(ctx, cx + cw / 2, cy + ch - 42, 1);
+    return ctx.getImage();
+  }
+
+  const px = cx + 16, pw = cw - 32;
+  txt(ctx, w.hanzi, px, cy + 10, 190, 76, Font.heavyRoundedSystemFont(hanziSize(w.hanzi, 64)), INK, "left");
+  box(ctx, cx + cw - 146, cy + 18, 130, 46, 14, YELLOW, 3);
+  txt(ctx, w.nghia, cx + cw - 142, cy + (w.nghia.length > 14 ? 23 : 31), 122, 40,
+    Font.heavyRoundedSystemFont(w.nghia.length > 14 ? 13 : 16), INK, "center");
+  txt(ctx, w.pinyin, px, cy + 88, pw, 26, Font.heavyRoundedSystemFont(21), RED, "left");
+  txt(ctx, "đọc: " + w.doc + "  ·  Hán Việt: " + w.hanviet, px, cy + 116, pw, 18, Font.boldRoundedSystemFont(12), SOFT_INK, "left");
+  txt(ctx, w.vd.zh, px, cy + 142, pw, 22, Font.heavyRoundedSystemFont(16), INK, "left");
+  txt(ctx, w.vd.vi, px, cy + 164, pw, 18, Font.italicSystemFont(12), SOFT_INK, "left");
+
+  const my = cy + 190, mh = ch - 190 - 14;
+  box(ctx, px, my, pw, mh, 14, WHITE, 0);
+  fill(ctx, rr(px, my, 6, mh, 3), YELLOW);
+  const meoFont = w.meo.length > 170 ? 11.5 : w.meo.length > 130 ? 13 : w.meo.length > 90 ? 14 : 15;
+  txt(ctx, "💡 " + w.meo, px + 14, my + 8, pw - 24, mh - 12, Font.semiboldRoundedSystemFont(meoFont), INK, "left");
+  return ctx.getImage();
+}
+// --- DRAW END ---
 
 function buildWidget(state, words) {
   const now = Date.now();
@@ -183,10 +324,7 @@ function buildWidget(state, words) {
   const family = config.widgetFamily || "large";
 
   const w = new ListWidget();
-  const bg = new LinearGradient();
-  bg.colors = [new Color("#7A5FD0"), new Color("#6C4FC4")];
-  bg.locations = [0, 1];
-  w.backgroundGradient = bg;
+  w.setPadding(0, 0, 0, 0);
   w.url = runURL;
   w.refreshAfterDate = new Date(now + HOUR);
 
@@ -204,47 +342,9 @@ function buildWidget(state, words) {
     word = (seen.length ? seen : words)[Math.floor(now / (3 * HOUR)) % (seen.length || words.length)];
   }
 
-  const header = mode === "review" ? "🧠 Nhớ nghĩa không? · " + due.length + " từ chờ ôn"
-    : mode === "new" ? "✨ Từ mới hôm nay"
-    : "🎉 Hôm nay xong rồi";
-  add(w, header, Font.boldRoundedSystemFont(11), MEANING, 1);
-  w.addSpacer(4);
-
-  if (mode === "review") {
-    // Recall prompt: only the character — tap to check yourself.
-    add(w, word.hanzi, Font.heavyRoundedSystemFont(family === "small" ? 44 : 60), HANZI, 1);
-    w.addSpacer();
-    add(w, "Chạm để lật thẻ 👆", Font.systemFont(12), SOFT, 1);
-  } else if (family === "small") {
-    add(w, word.hanzi, Font.heavyRoundedSystemFont(40), HANZI, 1);
-    add(w, word.pinyin, Font.mediumSystemFont(15), PINYIN, 1);
-    add(w, word.nghia, Font.boldRoundedSystemFont(13), MEANING, 2);
-  } else if (family === "medium") {
-    const row = w.addStack();
-    row.centerAlignContent();
-    const left = row.addStack();
-    left.layoutVertically();
-    add(left, word.hanzi, Font.heavyRoundedSystemFont(36), HANZI, 1);
-    add(left, word.pinyin, Font.mediumSystemFont(14), PINYIN, 1);
-    row.addSpacer(12);
-    const right = row.addStack();
-    right.layoutVertically();
-    add(right, word.nghia + "  ·  đọc: " + word.doc, Font.boldRoundedSystemFont(13), MEANING, 1);
-    right.addSpacer(4);
-    add(right, "💡 " + word.meo, Font.systemFont(12), Color.white(), 3);
-  } else {
-    add(w, word.hanzi, Font.heavyRoundedSystemFont(54), HANZI, 1);
-    add(w, word.pinyin + "   ·   đọc: " + word.doc, Font.mediumSystemFont(16), PINYIN, 1);
-    add(w, word.nghia + "  (Hán Việt: " + word.hanviet + ")", Font.boldRoundedSystemFont(15), MEANING, 1);
-    w.addSpacer(8);
-    add(w, word.vd.zh, Font.mediumSystemFont(15), HANZI, 1);
-    add(w, word.vd.vi, Font.italicSystemFont(12), SOFT, 1);
-    w.addSpacer(8);
-    add(w, "💡 " + word.meo, Font.systemFont(13), Color.white(), 4);
-  }
-
-  w.addSpacer();
-  add(w, "Đã thuộc " + s.mastered + "/" + s.total + (s.streak ? "  ·  🔥 " + s.streak : ""), Font.mediumSystemFont(10), SOFT, 1);
+  w.backgroundImage = drawWidget(family, {
+    mode, word, mastered: s.mastered, total: s.total, streak: s.streak, due: due.length,
+  });
   return w;
 }
 
