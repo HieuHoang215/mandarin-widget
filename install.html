@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cài Widget</title>
+<style>
+  :root { --ink: #1C1530; --cream: #FFF4DF; --yellow: #FFD23F; --green: #3DDC84; --grape: #6C4FC4; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; background: var(--grape); color: var(--ink);
+    font-family: ui-rounded, -apple-system, system-ui, sans-serif;
+    padding: max(24px, env(safe-area-inset-top)) 16px 32px;
+  }
+  main { max-width: 480px; margin: 0 auto; background: var(--cream); border: 4px solid var(--ink);
+    border-radius: 24px; box-shadow: 6px 6px 0 var(--ink); padding: 24px 20px; }
+  h1 { margin: 0 0 16px; font-size: 26px; }
+  ol { padding-left: 22px; font-size: 17px; line-height: 1.5; }
+  li { margin-bottom: 10px; }
+  button {
+    width: 100%; font: inherit; font-size: 22px; font-weight: 800; color: var(--ink);
+    background: var(--yellow); border: 4px solid var(--ink); border-radius: 18px;
+    box-shadow: 5px 5px 0 var(--ink); padding: 18px; margin: 8px 0 20px; cursor: pointer;
+  }
+  button.ok { background: var(--green); }
+  button:disabled { opacity: .6; }
+  a { color: var(--grape); font-weight: 800; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Cài widget 汉字 📲</h1>
+  <button id="copy" disabled>Đang tải…</button>
+  <ol>
+    <li>Bấm nút vàng ở trên để copy script.</li>
+    <li>Mở app <b>Scriptable</b> → bấm <b>+</b> → giữ tay vào ô trống → <b>Paste</b>.</li>
+    <li>Bấm tên script ở trên cùng, đổi thành <b>Mandarin</b>, rồi bấm ▶️ một lần (cho phép thông báo).</li>
+    <li>Giữ màn hình chính → <b>+</b> → <b>Scriptable</b> → thêm widget → giữ widget → <b>Edit Widget</b> → Script: <b>Mandarin</b>.</li>
+  </ol>
+</main>
+<script>
+const btn = document.getElementById("copy");
+let code = "";
+// Load first so the copy happens directly inside the tap (Safari requires that).
+fetch("widget.js", { cache: "no-store" }).then(r => r.text()).then(t => {
+  code = t;
+  btn.disabled = false;
+  btn.textContent = "📋 Copy script";
+}).catch(() => { btn.textContent = "Lỗi mạng — tải lại trang"; });
+
+btn.onclick = async () => {
+  try {
+    await navigator.clipboard.writeText(code);
+  } catch (e) {
+    // Fallback for older iOS: copy from a hidden textarea.
+    const ta = document.createElement("textarea");
+    ta.value = code;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.setSelectionRange(0, code.length);
+    ta.select();
+    document.execCommand("copy");
+    ta.remove();
+  }
+  btn.classList.add("ok");
+  btn.textContent = "✅ Đã copy! Mở Scriptable";
+};
+</script>
+</body>
+</html>
